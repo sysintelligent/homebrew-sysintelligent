@@ -9,7 +9,8 @@ class BdcCli < Formula
   depends_on "npm" => :build
 
   def install
-    system "go", "build", "-o", "bdc-cli-bin", "./cmd/bdc-cli"
+    # Build the Go binary
+    system "go", "build", "-ldflags", "-X 'github.com/sysintelligent/bdc-bridge/cmd/bdc-cli/cmd.Version=#{version}'", "-o", "bdc-cli-bin", "./cmd/bdc-cli"
     libexec.install "bdc-cli-bin"
     
     # Create a wrapper script that sets up the user's home directory for UI files
@@ -25,18 +26,22 @@ class BdcCli < Formula
         echo "Setting up BDC CLI for first use..."
         
         # Copy all the UI files
-        cp -R "#{libexec}/ui-files/"* "${USER_UI_DIR}/"
-        
-        # Copy hidden files and directories
-        if [ -d "#{libexec}/ui-files/.next" ]; then
-          mkdir -p "${USER_UI_DIR}/.next"
-          cp -R "#{libexec}/ui-files/.next/"* "${USER_UI_DIR}/.next/"
+        if [ -d "#{libexec}/ui-files" ]; then
+          cp -R "#{libexec}/ui-files/"* "${USER_UI_DIR}/" 2>/dev/null || true
+          
+          # Copy hidden files and directories
+          if [ -d "#{libexec}/ui-files/.next" ]; then
+            mkdir -p "${USER_UI_DIR}/.next"
+            cp -R "#{libexec}/ui-files/.next/"* "${USER_UI_DIR}/.next/" 2>/dev/null || true
+          fi
+          
+          # Install dependencies
+          echo "Installing Node.js dependencies..."
+          cd "${USER_UI_DIR}"
+          npm install --quiet
+        else
+          echo "Warning: UI files not found. Some features may not work correctly."
         fi
-        
-        # Install dependencies
-        echo "Installing Node.js dependencies..."
-        cd "${USER_UI_DIR}"
-        npm install --quiet
       fi
       
       # Set environment variable to point to user's UI directory
@@ -52,21 +57,31 @@ class BdcCli < Formula
     # Install UI files to a temporary location in libexec
     mkdir_p "#{libexec}/ui-files"
     
+    # Build and install UI files
     cd "ui" do
-      system "npm", "install"
+      system "npm", "install", "--quiet"
       system "npm", "run", "build"
       
-      # Copy all UI files to the temporary location
-      cp_r ".next/.", "#{libexec}/ui-files/.next"
-      cp_r "public/.", "#{libexec}/ui-files/public"
-      cp_r "src/.", "#{libexec}/ui-files/src"
-      cp "package.json", "#{libexec}/ui-files/"
-      cp "next.config.js", "#{libexec}/ui-files/"
-      cp "tsconfig.json", "#{libexec}/ui-files/"
-      cp "tailwind.config.js", "#{libexec}/ui-files/"
-      cp "postcss.config.js", "#{libexec}/ui-files/"
-      cp "next-env.d.ts", "#{libexec}/ui-files/"
-      cp "components.json", "#{libexec}/ui-files/"
+      # Copy UI files with error handling
+      Dir.glob(".next/**/*").each do |file|
+        next if File.directory?(file)
+        target = "#{libexec}/ui-files/#{file}"
+        FileUtils.mkdir_p(File.dirname(target))
+        FileUtils.cp(file, target)
+      end
+      
+      # Copy other necessary files
+      ["public", "src", "package.json", "next.config.js", "tsconfig.json", 
+       "tailwind.config.js", "postcss.config.js", "next-env.d.ts", 
+       "components.json"].each do |file|
+        if File.exist?(file)
+          if File.directory?(file)
+            FileUtils.cp_r(file, "#{libexec}/ui-files/")
+          else
+            FileUtils.cp(file, "#{libexec}/ui-files/")
+          end
+        end
+      end
     end
     
     # Create a default configuration file
