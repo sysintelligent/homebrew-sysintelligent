@@ -32,6 +32,14 @@ To add a new formula:
 3. Test the formula locally
 4. Submit a pull request
 
+### Git Configuration
+
+This repository includes a `.gitignore` file that excludes common system files:
+- macOS system files (`.DS_Store`, `.Spotlight-V100`, etc.)
+- Windows system files (`Thumbs.db`, `ehthumbs.db`)
+
+These files are excluded to keep the repository clean and prevent unnecessary system-specific files from being committed.
+
 ## Formula Structure
 
 Each formula is a Ruby file that describes how to install a package. Here's the basic structure:
