@@ -85,7 +85,7 @@ class BdcCli < Formula
     end
     
     # Create a default configuration file
-    (etc/"bdc-cli.conf").write <<~EOS
+    # Removed etc config file <<~EOS
       {
         "ui_path": "${HOME}/.bdc-cli/ui"
       }
