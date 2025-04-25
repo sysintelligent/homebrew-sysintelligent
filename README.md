@@ -20,7 +20,7 @@ brew install sysintelligent/sysintelligent/[tool-name]
 
 - `bdc-cli`: A tool between developers and complex backend infrastructure
   - Install with: `brew install sysintelligent/sysintelligent/bdc-cli`
-  - Version: 1.0.2
+  - Version: 1.0.3
   - Dependencies: go, node, npm
 
 ## Contributing
