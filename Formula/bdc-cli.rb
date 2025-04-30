@@ -1,8 +1,8 @@
 class BdcCli < Formula
   desc "A tool between developers and complex backend infrastructure"
   homepage "https://github.com/sysintelligent/bdc-bridge"
-  url "https://github.com/sysintelligent/bdc-bridge/archive/v1.0.2.tar.gz"
-  sha256 "1a411977f063866356890dbe1ca3f603e107f364cb094f92baedbd185e4d71ee"
+  url "https://github.com/sysintelligent/bdc-bridge/archive/v1.0.3.tar.gz"
+  sha256 "6fbc345348c731f2d38b03366643825363747d2b5f724e65c2bd38600809406e"
 
   depends_on "go" => :build
   depends_on "node" => :build
