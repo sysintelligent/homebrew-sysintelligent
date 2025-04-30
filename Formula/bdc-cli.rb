@@ -20,6 +20,17 @@ class BdcCli < Formula
       # Create user home directory for bdc-cli if it doesn't exist
       USER_BDC_DIR="${HOME}/.bdc-cli"
       USER_UI_DIR="${USER_BDC_DIR}/ui"
+      USER_CONFIG_FILE="${USER_BDC_DIR}/config.json"
+      
+      if [ ! -d "${USER_BDC_DIR}" ]; then
+        mkdir -p "${USER_BDC_DIR}"
+        # Create a default configuration file if it doesn't exist
+        if [ ! -f "${USER_CONFIG_FILE}" ]; then
+          echo '{
+            "ui_path": "${HOME}/.bdc-cli/ui"
+          }' > "${USER_CONFIG_FILE}"
+        fi
+      fi
       
       if [ ! -d "${USER_UI_DIR}" ]; then
         mkdir -p "${USER_UI_DIR}"
@@ -44,8 +55,9 @@ class BdcCli < Formula
         fi
       fi
       
-      # Set environment variable to point to user's UI directory
+      # Set environment variable to point to user's UI directory and config file
       export BDC_UI_PATH="${USER_UI_DIR}"
+      export BDC_CONFIG_FILE="${USER_CONFIG_FILE}"
       
       # Execute the main binary
       exec "#{libexec}/bdc-cli-bin" "$@"
@@ -83,13 +95,6 @@ class BdcCli < Formula
         end
       end
     end
-    
-    # Create a default configuration file
-    (etc/"bdc-cli.conf").write <<~EOS
-      {
-        "ui_path": "${HOME}/.bdc-cli/ui"
-      }
-    EOS
   end
 
   test do
