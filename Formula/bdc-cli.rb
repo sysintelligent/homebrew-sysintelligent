@@ -1,8 +1,8 @@
 class BdcCli < Formula
   desc "A tool between developers and complex backend infrastructure"
   homepage "https://github.com/sysintelligent/bdc-bridge"
-  url "https://github.com/sysintelligent/bdc-bridge/archive/v1.0.4.tar.gz"
-  sha256 "ecbf7053b249dff93584fbfdd3144745be9400792bed66a9b099bd35a83ea2e2"
+  url "https://github.com/sysintelligent/bdc-bridge/archive/v1.0.2.tar.gz"
+  sha256 "1a411977f063866356890dbe1ca3f603e107f364cb094f92baedbd185e4d71ee"
 
   depends_on "go" => :build
   depends_on "node" => :build
@@ -85,7 +85,7 @@ class BdcCli < Formula
     end
     
     # Create a default configuration file
-    # Removed etc config file <<~EOS
+    (etc/"bdc-cli.conf").write <<~EOS
       {
         "ui_path": "${HOME}/.bdc-cli/ui"
       }
