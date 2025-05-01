@@ -7,7 +7,7 @@ This is an internal Homebrew tap for our organization's tools.
 First, add this tap to your Homebrew installation:
 
 ```bash
-brew tap sysintelligent/sysintelligent git@github.com:sysintelligent/homebrew-sysintelligent.git
+brew tap sysintelligent/sysintelligent
 ```
 
 Then you can install any of our internal tools using:
