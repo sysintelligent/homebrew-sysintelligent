@@ -16,6 +16,12 @@ Then you can install any of our internal tools using:
 brew install [tool-name]
 ```
 
+To remove this tap:
+
+```bash
+brew untap sysintelligent/sysintelligent
+```
+
 ## Available Tools
 
 - `dopctl`: A tool for managing DevOps operations and infrastructure
