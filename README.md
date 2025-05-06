@@ -18,9 +18,9 @@ brew install sysintelligent/sysintelligent/[tool-name]
 
 ## Available Tools
 
-- `bdc-cli`: A tool between developers and complex backend infrastructure
-  - Install with: `brew install sysintelligent/sysintelligent/bdc-cli`
-  - Version: 1.0.4
+- `dopctl`: A tool for managing DevOps operations and infrastructure
+  - Install with: `brew install sysintelligent/sysintelligent/dopctl`
+  - Version: 1.0.2
   - Dependencies: go, node, npm
 
 ## Contributing
