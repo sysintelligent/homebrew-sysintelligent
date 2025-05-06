@@ -13,14 +13,13 @@ brew tap sysintelligent/sysintelligent
 Then you can install any of our internal tools using:
 
 ```bash
-brew install sysintelligent/sysintelligent/[tool-name]
+brew install [tool-name]
 ```
 
 ## Available Tools
 
 - `dopctl`: A tool for managing DevOps operations and infrastructure
-  - Install with: `brew install sysintelligent/sysintelligent/dopctl`
-  - Version: 1.0.2
+  - Install with: `brew install dopctl`
   - Dependencies: go, node, npm
 
 ## Contributing
@@ -31,14 +30,6 @@ To add a new formula:
 2. Write the formula following Homebrew's guidelines
 3. Test the formula locally
 4. Submit a pull request
-
-### Git Configuration
-
-This repository includes a `.gitignore` file that excludes common system files:
-- macOS system files (`.DS_Store`, `.Spotlight-V100`, etc.)
-- Windows system files (`Thumbs.db`, `ehthumbs.db`)
-
-These files are excluded to keep the repository clean and prevent unnecessary system-specific files from being committed.
 
 ## Formula Structure
 
